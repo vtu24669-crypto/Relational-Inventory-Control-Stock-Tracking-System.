@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::content})}">
+
+<head>
+    <title>Create / Edit Event</title>
+</head>
+
+<body>
+    <div th:fragment="content">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-dark text-white p-3">
+                        <h5 class="mb-0" th:text="${event.id == null ? 'Create New Event' : 'Edit Event'}">Create / Edit
+                            Event</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form th:action="@{/admin/events}" th:object="${event}" method="post">
+                            <input type="hidden" th:field="*{id}" />
+
+                            <div class="mb-3">
+                                <label class="form-label">Event Name</label>
+                                <input type="text" class="form-control" th:field="*{name}"
+                                    th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                    Name Error</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" th:field="*{date}"
+                                    th:classappend="${#fields.hasErrors('date')} ? 'is-invalid' : ''">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">
+                                    Date Error</div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Department</label>
+                                    <input type="text" class="form-control" th:field="*{department}"
+                                        th:classappend="${#fields.hasErrors('department')} ? 'is-invalid' : ''">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('department')}"
+                                        th:errors="*{department}">Department Error</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Event Type</label>
+                                    <select class="form-select" th:field="*{type}"
+                                        th:classappend="${#fields.hasErrors('type')} ? 'is-invalid' : ''">
+                                        <option value="" disabled selected>Select an option</option>
+                                        <option value="Technical Event">Technical Event</option>
+                                        <option value="Cultural Event">Cultural Event</option>
+                                        <option value="Sports Event">Sports Event</option>
+                                        <option value="Arts Event">Arts Event</option>
+                                        <option value="Literary Event">Literary Event</option>
+                                        <option value="Workshop">Workshop</option>
+                                        <option value="Seminar">Seminar</option>
+                                        <option value="Guest Lecture">Guest Lecture</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('type')}"
+                                        th:errors="*{type}">Type Error</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" th:field="*{description}" rows="4"
+                                    th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"></textarea>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}"
+                                    th:errors="*{description}">Description Error</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="imageUrl" class="form-label fw-bold">Cover Image URL (Optional)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-image"></i></span>
+                                    <input type="text" class="form-control" id="imageUrl" th:field="*{imageUrl}" placeholder="https://images.unsplash.com/... (Leave blank for default image)">
+                                </div>
+                                <div class="form-text">Paste a direct link to an image (e.g. from Unsplash) to make the event card look beautiful.</div>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}">Error</div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-end gap-2">
+                                <a th:href="@{/admin/events}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-success">Save Event</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Sign Up</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card shadow border-0 border-top border-primary border-4">
+                <div class="card-header bg-white text-center p-4">
+                    <h3 class="mb-0 fw-bold text-primary">Student Sign Up</h3>
+                    <p class="text-muted small mt-2 mb-0">Create an account to register for upcoming campus events.</p>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}">
+                        Error
+                    </div>
+
+                    <form th:action="@{/register-user}" th:object="${user}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label fw-bold">Username</label>
+                            <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Choose a unique username" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold">Email Address</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="name@college.edu" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label fw-bold">Password</label>
+                            <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Create a secure password" required>
+                        </div>
+                        <div class="d-grid mb-3">
+                            <button class="btn btn-primary btn-lg fw-bold" type="submit">Create Account</button>
+                        </div>
+                        <p class="text-center text-muted small mt-4">Already have an account? <a th:href="@{/login}" class="text-decoration-none fw-bold">Log in here</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

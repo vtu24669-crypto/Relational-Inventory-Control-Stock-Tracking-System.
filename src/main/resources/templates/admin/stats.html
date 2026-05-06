@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Registration Statistics</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mt-4 border-bottom pb-2 mb-4">
+        <h2 class="h3">Event Registration Statistics</h2>
+        <a th:href="@{/admin/events}" class="btn btn-sm btn-outline-secondary">Back to Dashboard</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card shadow border-0">
+                <div class="card-header bg-info text-white fw-bold">
+                    Registrations per Event
+                </div>
+                <ul class="list-group list-group-flush" th:if="${!#lists.isEmpty(stats)}">
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3" th:each="stat : ${stats}">
+                        <span th:text="${stat.eventName}">Event Name</span>
+                        <span class="badge bg-primary rounded-pill px-3 py-2" th:text="${stat.registrationCount}">14</span>
+                    </li>
+                </ul>
+                <div class="card-body text-center text-muted" th:if="${#lists.isEmpty(stats)}">
+                    No registrations exist yet.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

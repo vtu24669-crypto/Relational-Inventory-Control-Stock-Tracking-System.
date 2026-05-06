@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Home - Upcoming Events</title>
+</head>
+<body>
+<div th:fragment="content">
+    
+    <div class="hero text-center shadow-sm">
+        <h1 class="display-5 fw-bold">Campus Events Hub</h1>
+        <p class="lead mb-4">Discover what's happening around the university in categorized blocks below.</p>
+        <a th:href="@{/events}" class="btn btn-outline-light btn-lg me-2">Search All Events</a>
+        <a th:unless="${#authorization.expression('isAuthenticated()')}" th:href="@{/login}" class="btn btn-light btn-lg text-primary fw-bold">Login Here</a>
+    </div>
+
+    <!-- Success Message -->
+    <div th:if="${param.verified}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        🎉 Your email has been successfully verified! Your registration is complete.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${#maps.isEmpty(groupedEvents)}">
+        <div class="alert alert-info border-0 shadow-sm text-center">No upcoming events are currently scheduled.</div>
+    </div>
+
+    <div th:each="entry : ${groupedEvents}" class="mb-5">
+        <div class="d-flex align-items-center mb-3">
+            <h2 class="h3 fw-bold mb-0 text-primary" th:text="${entry.key} + 's'">Event Type</h2>
+            <div class="flex-grow-1 ms-3" style="height: 2px; background-color: #dee2e6;"></div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" th:each="event : ${entry.value}">
+                <div class="card h-100 shadow-sm border-0 border-top border-primary border-3">
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <span class="badge bg-secondary" th:text="${event.department}">Dept</span>
+                        </div>
+                        <h5 class="card-title text-dark fw-bold mb-1" th:text="${event.name}">Event Name</h5>
+                        <p class="card-text text-dark fw-semibold mb-3">
+                            <i class="bi bi-calendar-event text-primary"></i> <span th:text="${event.date}">Date</span>
+                        </p>
+                        <p class="card-text text-muted small" th:text="${event.description}">Description...</p>
+                    </div>
+                    <div class="card-footer bg-white border-0 text-center pb-3 pt-0">
+                        <a th:href="@{/events/{id}/register(id=${event.id})}" class="btn btn-outline-primary btn-sm w-100">Register Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Register for Event</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white text-center py-3">
+                    <h4 class="mb-0">Register for Event</h4>
+                </div>
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold" th:text="${event.name}">Event Name</h5>
+                    <p class="card-text text-muted mb-4"><span th:text="${event.date}">Date</span> | <span th:text="${event.department}">Department</span></p>
+
+                    <form th:action="@{/events/{id}/register(id=${event.id})}" th:object="${registration}" method="post">
+                        
+                        <!-- Global Error Message to stand out if validation fails -->
+                        <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                            <strong><i class="bi bi-exclamation-triangle-fill"></i> Please fix the errors below:</strong>
+                            <ul class="mb-0">
+                                <li th:each="err : ${#fields.detailedErrors()}" th:text="${err.message}">Error</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="studentName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="studentName" th:field="*{studentName}" th:classappend="${#fields.hasErrors('studentName')} ? 'is-invalid' : ''">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('studentName')}" th:errors="*{studentName}">Name Error</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="studentEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="studentEmail" th:field="*{studentEmail}" th:classappend="${#fields.hasErrors('studentEmail')} ? 'is-invalid' : ''">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('studentEmail')}" th:errors="*{studentEmail}">Email Error</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="studentId" class="form-label">Student ID</label>
+                            <input type="text" class="form-control" id="studentId" th:field="*{studentId}" th:classappend="${#fields.hasErrors('studentId')} ? 'is-invalid' : ''">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('studentId')}" th:errors="*{studentId}">ID Error</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Complete Registration</button>
+                            <a th:href="@{/events}" class="btn btn-link text-muted">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

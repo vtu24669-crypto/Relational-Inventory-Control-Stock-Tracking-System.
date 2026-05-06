@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>My Registrations</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <h2 class="mb-4 text-center">My Event Registrations</h2>
+            
+            <!-- Email lookup form removed as registrations are automatically loaded for the authenticated user -->
+
+            <div>
+                <div th:if="${registrations == null or #lists.isEmpty(registrations)}" class="alert alert-warning border-0 shadow-sm text-center">
+                    You have not registered for any events yet. <a th:href="@{/events}">Browse Events</a>
+                </div>
+                
+                <div th:if="${!#lists.isEmpty(registrations)}" class="list-group shadow-sm">
+                    <div th:each="reg : ${registrations}" class="list-group-item list-group-item-action flex-column align-items-start p-4 border-subtle">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1 text-primary fw-bold" th:text="${reg.event.name}">Event Name</h5>
+                            <small class="text-muted fw-bold" th:text="${reg.event.date}">3 days ago</small>
+                        </div>
+                        <p class="mb-1 text-muted" th:text="${reg.event.description}">Event description</p>
+                        <small class="badge bg-secondary" th:text="${reg.event.department}">Dept</small>
+                        <small class="badge bg-light text-dark shadow-sm border" th:text="${reg.event.type}">Type</small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

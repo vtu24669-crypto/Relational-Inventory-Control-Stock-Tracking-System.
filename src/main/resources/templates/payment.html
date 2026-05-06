@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Secure Payment</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-md-5">
+            <div class="card shadow border-0">
+                <div class="card-header bg-dark text-white text-center py-3">
+                    <h5 class="mb-0"><i class="bi bi-credit-card"></i> Secure Checkout</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold" th:text="${event.name}">Event Name</h4>
+                        <div class="display-4 text-primary fw-bold my-2" 
+                             th:text="'₹' + (${event.ticketPrice != null and event.ticketPrice > 0} ? ${event.ticketPrice} : '100.0')">₹100.0</div>
+                        <span class="badge bg-success">Registration ID: <span th:text="${registration.id}"></span></span>
+                    </div>
+
+                    <div th:if="${param.error}" class="alert alert-danger fw-bold" role="alert">
+                        <i class="bi bi-exclamation-triangle"></i> Invalid OTP entered. Please try again.
+                    </div>
+
+                    <form th:action="@{/process-payment}" method="post">
+                        <input type="hidden" name="registrationId" th:value="${registration.id}">
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Cardholder Name</label>
+                            <input type="text" class="form-control" th:value="${registration.studentName}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Card Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-credit-card"></i></span>
+                                <input type="text" class="form-control" placeholder="0000 0000 0000 0000" required maxlength="19">
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <label class="form-label fw-bold">Expiry Date</label>
+                                <input type="text" class="form-control" placeholder="MM/YY" required maxlength="5">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label fw-bold">CVV</label>
+                                <input type="password" class="form-control" placeholder="123" required maxlength="3">
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="alert alert-warning mb-4 shadow-sm border-warning">
+                            <h5 class="alert-heading fw-bold mb-2"><i class="bi bi-shield-lock"></i> Mock OTP Verification</h5>
+                            <p class="mb-2">An OTP was sent to: <strong><span th:text="${registration.studentEmail}">student@email.com</span></strong></p>
+                            <div class="bg-white p-2 border rounded d-inline-block">
+                                <span class="text-muted small me-2">Your OTP is:</span>
+                                <strong class="fs-4 text-danger tracking-wider" th:text="${registration.verificationToken}">123456</strong>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Enter OTP to Confirm</label>
+                            <input type="text" name="otp" class="form-control form-control-lg text-center fw-bold" placeholder="------" required maxlength="6" style="letter-spacing: 0.5rem;">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">
+                            Pay Securely
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer bg-light text-center text-muted small py-3">
+                    <i class="bi bi-lock-fill text-success"></i> Payments are processed via a secure test gateway.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Admin Login</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <div class="card shadow border-0">
+                <div class="card-header bg-dark text-white p-3 text-center">
+                    <h5 class="mb-0">Admin Login</h5>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                        Invalid username and password.
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                        You have been logged out.
+                    </div>
+
+                    <div th:if="${param.registered}" class="alert alert-success fw-bold" role="alert">
+                        <i class="bi bi-check-circle"></i> Registration successful! Please log in.
+                    </div>
+
+                    <form th:action="@{/login}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username or Email</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="e.g. hari or hari@gmail.com" required autofocus>
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="d-grid mb-3">
+                            <button class="btn btn-primary btn-lg" type="submit">Sign in</button>
+                        </div>
+                        <p class="text-center text-muted small mt-4">
+                            Don't have an account? <a th:href="@{/register-user}" class="text-decoration-none fw-bold">Sign up</a><br>
+                            Or return to <a th:href="@{/}" class="text-decoration-none">Home</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

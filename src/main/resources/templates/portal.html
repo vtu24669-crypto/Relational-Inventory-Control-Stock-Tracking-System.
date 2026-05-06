@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::content})}">
+
+<head>
+    <title>All-In-One Unified Portal</title>
+</head>
+
+<body>
+    <div th:fragment="content">
+        <div class="row justify-content-center mt-5 mb-5">
+            <div class="col-md-8 text-center">
+                <h1 class="display-5 fw-bold text-primary mb-3"><i class="bi bi-grid-3x3-gap"></i> Unified Mission
+                    Control</h1>
+                <p class="lead text-muted">Access every corner of the Campus Events application from this single hub.
+                </p>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+            <!-- Student Section -->
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 border-top border-primary border-4">
+                    <div class="card-body p-4 text-center">
+                        <div class="display-3 text-primary mb-3"><i class="bi bi-mortarboard"></i></div>
+                        <h3 class="card-title fw-bold">Student Hub</h3>
+                        <p class="card-text text-muted mb-4">Discover upcoming workshops, register for events, and
+                            manage your current registrations.</p>
+
+                        <div class="d-grid gap-2">
+                            <a th:href="@{/events}" class="btn btn-primary">Browse All Events</a>
+                            <a th:href="@{/my-registrations}" class="btn btn-outline-primary">My Registrations</a>
+                            <form th:action="@{/verify-otp}" method="get" class="mt-2">
+                                <div class="input-group">
+                                    <input type="email" name="email" class="form-control"
+                                        placeholder="Enter Registration Email to Verify OTP" required>
+                                    <button type="submit" class="btn btn-outline-secondary">Go to OTP</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Section -->
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 border-top border-success border-4">
+                    <div class="card-body p-4 text-center">
+                        <div class="display-3 text-success mb-3"><i class="bi bi-shield-lock"></i></div>
+                        <h3 class="card-title fw-bold">Administrator Panel</h3>
+                        <p class="card-text text-muted mb-4">Create, edit, or delete events and view analytics across
+                            the entire platform.</p>
+
+                        <div class="alert alert-light border shadow-sm text-start" role="alert">
+                            <strong><i class="bi bi-info-circle"></i> Admin Credentials</strong><br>
+                            Username: <code class="user-select-all">admin</code><br>
+                            Password: <code class="user-select-all">adminpass</code>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-3">
+                            <a th:href="@{/admin/events}" class="btn btn-success">Manage Events Dashboard</a>
+                            <a th:href="@{/login}" class="btn btn-outline-success">Admin Login Page</a>
+                            <a th:href="@{/admin/stats}" class="btn btn-outline-dark">Registration Statistics</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

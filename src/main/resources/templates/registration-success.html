@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::title}, ~{::content})}">
+
+<head>
+    <title>Registration Successful</title>
+</head>
+
+<body>
+    <div th:fragment="content">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-7">
+                <div class="card shadow border-0 border-top border-success border-4">
+                    <div class="card-body p-5 text-center">
+                        <div class="display-1 text-success mb-3"><i class="bi bi-check-circle-fill"></i></div>
+                        <h2 class="fw-bold mb-4">Registration Successful!</h2>
+
+                        <p class="lead text-muted mb-4">
+                            Thank you, <strong th:text="${registration.studentName}">Student</strong>!
+                            You have successfully registered for <strong th:text="${registration.event.name}">Event</strong>.
+                        </p>
+
+                        <div class="card bg-light border-0 shadow-sm mb-4 text-start printable-receipt">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-receipt"></i> Official Receipt</h5>
+                                <div class="row mb-2">
+                                    <div class="col-sm-4 text-muted">Registration ID:</div>
+                                    <div class="col-sm-8 fw-bold" th:text="'#' + ${registration.id}">#12345</div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-sm-4 text-muted">Email Address:</div>
+                                    <div class="col-sm-8 fw-bold" th:text="${registration.studentEmail}">email@example.com</div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-sm-4 text-muted">Event Name:</div>
+                                    <div class="col-sm-8 fw-bold" th:text="${registration.event.name}">Event Name</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4 text-muted">Amount Paid:</div>
+                                    <div class="col-sm-8 fw-bold text-success" th:text="'₹' + (${registration.event.ticketPrice != null and registration.event.ticketPrice > 0} ? ${registration.event.ticketPrice} : '100.0')">₹100.0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-center mt-4 d-print-none">
+                            <button onclick="window.print()" class="btn btn-primary btn-lg px-5"><i class="bi bi-download"></i> Download Receipt</button>
+                            <a th:href="@{/events}" class="btn btn-outline-secondary btn-lg px-5">Browse More Events</a>
+                        </div>
+                        
+                        <style>
+                            @media print {
+                                body * {
+                                    visibility: hidden;
+                                }
+                                .printable-receipt, .printable-receipt * {
+                                    visibility: visible;
+                                }
+                                .printable-receipt {
+                                    position: absolute;
+                                    left: 0;
+                                    top: 0;
+                                    width: 100%;
+                                    border: 2px solid #000 !important;
+                                }
+                                .display-1, h2, .lead {
+                                    visibility: visible;
+                                }
+                            }
+                        </style>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
